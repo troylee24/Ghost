@@ -1,0 +1,31 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 color: hint_color;
+uniform float intensity: hint_range(0, 1);
+
+void fragment()
+{
+	vec2 ratio = vec2(1.0);
+	ivec2 size = textureSize(SCREEN_TEXTURE, 0);
+	vec3 rgb = texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
+	
+	if (size.x > size.y)
+	{
+		ratio.x = 1.0 / (float(size.y) / float(size.x));
+	}
+	else 
+	{
+		ratio.y = 1.0 / (float(size.x) / float(size.y));
+	}
+
+	bool inner = distance(vec2(0.5) * ratio, SCREEN_UV * ratio) < 1.0 - intensity;
+	COLOR.rgb = inner ? rgb : color.rgb;
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/color = null
+shader_param/intensity = null

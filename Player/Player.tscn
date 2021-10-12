@@ -1,0 +1,218 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Player/ghost_spritesheet.png" type="Texture" id=2]
+[ext_resource path="res://Player/States/Jump.gd" type="Script" id=3]
+[ext_resource path="res://Player/States/Move.gd" type="Script" id=4]
+[ext_resource path="res://Player/States/Fall.gd" type="Script" id=5]
+[ext_resource path="res://Player/States/Dash.gd" type="Script" id=7]
+[ext_resource path="res://Assets/Player/bar.png" type="Texture" id=8]
+[ext_resource path="res://Player/DashBar.gd" type="Script" id=9]
+[ext_resource path="res://Assets/Player/box.png" type="Texture" id=10]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 12 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Dash"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 8, 9, 10, 11 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 33, 34, 35, 36 ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 24, 25, 26, 27, 28, 32 ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 1.6
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 18, 19 ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 41, 42, 43 ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 8, 9, 10, 11 ]
+}
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+light_mask = 0
+texture = ExtResource( 2 )
+hframes = 8
+vframes = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 1 )
+
+[node name="DashBar" type="TextureProgress" parent="."]
+light_mask = 0
+margin_left = -8.0
+margin_top = -24.0
+margin_right = 8.0
+margin_bottom = -20.0
+value = 100.0
+texture_progress = ExtResource( 8 )
+nine_patch_stretch = true
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TweenProgress" type="Tween" parent="DashBar"]
+
+[node name="Bar1" type="ColorRect" parent="DashBar"]
+modulate = Color( 0, 1, 0, 0.6 )
+margin_right = 8.0
+margin_bottom = 4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bar2" type="ColorRect" parent="DashBar"]
+modulate = Color( 0, 1, 0, 0.686275 )
+margin_left = 8.0
+margin_right = 16.0
+margin_bottom = 4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Border" type="TextureRect" parent="DashBar"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 16.0
+margin_bottom = 4.0
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Dash = SubResource( 2 )
+anims/Fall = SubResource( 3 )
+anims/Float = SubResource( 4 )
+anims/Idle = SubResource( 5 )
+anims/Jump = SubResource( 6 )
+anims/Land = SubResource( 7 )
+anims/Run = SubResource( 8 )
+
+[node name="States" type="Node" parent="."]
+
+[node name="Move" type="Node" parent="States"]
+script = ExtResource( 4 )
+
+[node name="Dash" type="Node" parent="States"]
+script = ExtResource( 7 )
+
+[node name="GhostTimer" type="Timer" parent="States/Dash"]
+wait_time = 0.05
+
+[node name="GhostTween" type="Tween" parent="States/Dash"]
+
+[node name="Jump" type="Node" parent="States"]
+script = ExtResource( 3 )
+
+[node name="Fall" type="Node" parent="States"]
+script = ExtResource( 5 )
+
+[connection signal="timeout" from="States/Dash/GhostTimer" to="States/Dash" method="_on_GhostTimer_timeout"]
+[connection signal="tween_completed" from="States/Dash/GhostTween" to="States/Dash" method="_on_tween_completed"]

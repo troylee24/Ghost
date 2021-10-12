@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 color: hint_color;
+uniform float intensity: hint_range(0, 1);
+
+void fragment()
+{
+	vec3 rgb = texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
+	COLOR.rgb = mix(rgb, color.rgb, intensity);
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/color = Color( 0, 0, 0, 1 )
+shader_param/intensity = 0.0

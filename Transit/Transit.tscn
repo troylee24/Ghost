@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Transit/Transit.gd" type="Script" id=1]
+[ext_resource path="res://Transit/Transit.png" type="Texture" id=2]
+[ext_resource path="res://Transit/Effects/Default.tres" type="Material" id=3]
+
+[node name="Transit" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="Curtain" type="TextureRect" parent="CanvasLayer"]
+material = ExtResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
